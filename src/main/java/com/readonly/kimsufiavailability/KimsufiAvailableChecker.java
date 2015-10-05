@@ -1,7 +1,12 @@
 package com.readonly.kimsufiavailability;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +19,10 @@ import java.util.Date;
 public class KimsufiAvailableChecker extends Activity {
 
     private TextView tV = null;
+    Intent mServiceIntent = null;
+    IntentFilter mStatusIntentFilter = null;
+
+    ResponseReceiver mResponseReceiver = null;
 
 
     @Override
@@ -22,14 +31,28 @@ public class KimsufiAvailableChecker extends Activity {
         setContentView(R.layout.activity_kimsufi_available_checker);
 
         tV = (TextView) findViewById(R.id.textViewOutput);
+
+        mResponseReceiver = new ResponseReceiver(this);
+
+
+
+        // The filter's action is BROADCAST_ACTION
+        mStatusIntentFilter = new IntentFilter(Constants.BROADCAST_ACTION);
+
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mResponseReceiver, mStatusIntentFilter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_kimsufi_available_checker, menu);
+
+
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -54,6 +77,7 @@ public class KimsufiAvailableChecker extends Activity {
 
         tVText += currentDateAndTime + " " + stringToAdd + System.getProperty("line.separator");
         tV.setText(tVText);
+        Log.i(this.getClass().getName(), tVText);
     }
 
 
@@ -64,14 +88,27 @@ public class KimsufiAvailableChecker extends Activity {
 
 
     public void buttonOnClick(View v) {
-        addLog("Starting test");
+        addLog("Starting service");
 
-        NetworkJob job = new NetworkJob(this);
-        job.execute(getString(R.string.kimsufiUrl));
+
+        mServiceIntent = new Intent(this, RequestService.class);
+        mServiceIntent.setData(Uri.parse("startThread"));
+
+        // Starts the IntentService
+        this.startService(mServiceIntent);
+
+
     }
 
     public void buttonResetOnClick(View v) {
+
+        mServiceIntent = new Intent(this, RequestService.class);
+        mServiceIntent.setData(Uri.parse("stopThread"));
+        this.stopService(mServiceIntent);
+
         emptyLog();
+
+        addLog("Service has been stopped");
     }
 
 
