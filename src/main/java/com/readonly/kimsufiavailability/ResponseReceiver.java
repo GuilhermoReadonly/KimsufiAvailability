@@ -3,6 +3,7 @@ package com.readonly.kimsufiavailability;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 // Broadcast receiver for receiving status updates from the IntentService
 public class ResponseReceiver extends BroadcastReceiver
@@ -18,6 +19,8 @@ public class ResponseReceiver extends BroadcastReceiver
 
         String response = intent.getStringExtra(Constants.EXTENDED_DATA_STATUS);
 
-        kac.addLog(response);
+        kac.logI(response);
+
+        Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
     }
 }
