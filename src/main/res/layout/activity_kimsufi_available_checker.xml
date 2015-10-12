@@ -9,39 +9,64 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/launch_test"
-        android:id="@+id/buttonStart"
+        android:text="@string/startStop"
+        android:id="@+id/buttonStartStop"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:clickable="true"
-        android:onClick="buttonOnClick"
+        android:onClick="buttonStartStopOnClick"
         android:nestedScrollingEnabled="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewOutput"
-        android:layout_below="@+id/buttonStart"
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:editable="false"
-        android:elegantTextHeight="false"
-        android:background="#ff000000"
-        android:textColor="#ff00ff00"
-        android:maxLines="99999"
-        android:lines="30" />
+        android:layout_below="@+id/buttonStartStop"
+        android:id="@+id/radioGroup">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/reset"
-        android:id="@+id/buttonReset"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/textViewOutput"
-        android:layout_alignEnd="@+id/textViewOutput"
-        android:onClick="buttonResetOnClick" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KS-6"
+            android:id="@+id/radioButtonKS6" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KS-5"
+            android:id="@+id/radioButtonKS5" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KS-4"
+            android:id="@+id/radioButtonKS4" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KS-3"
+            android:id="@+id/radioButtonKS3" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KS-2 SSD"
+            android:id="@+id/radioButtonKS2SSD" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KS-2"
+            android:id="@+id/radioButtonKS2" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KS-1"
+            android:id="@+id/radioButtonKS1" />
+    </RadioGroup>
 
 </RelativeLayout>

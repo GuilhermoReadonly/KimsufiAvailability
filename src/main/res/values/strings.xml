@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Kimsufi availability</string>
 
-    <string name="launch_test">Launch Test !</string>
-    <string name="reset">Reset</string>
+    <string name="startStop">Start service !</string>
     <string name="action_settings">Settings</string>
     <string name="kimsufiUrl">https://ws.ovh.com/dedicated/r2/ws.dispatcher/getAvailability2</string>
 </resources>
