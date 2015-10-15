@@ -4,4 +4,7 @@
     <string name="startStop">Start service !</string>
     <string name="action_settings">Settings</string>
     <string name="kimsufiUrl">https://ws.ovh.com/dedicated/r2/ws.dispatcher/getAvailability2</string>
+    <string name="serverAvailable">Server available !!! Be quick and good luck !</string>
+
+
 </resources>

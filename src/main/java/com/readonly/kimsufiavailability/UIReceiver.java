@@ -27,7 +27,7 @@ public class UIReceiver extends BroadcastReceiver
         String status = response;
 
         if(! status.equals(Constants.STATUS_UNKNOWN)){
-            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.serverAvailable, Toast.LENGTH_LONG).show();
             kac.ringtone.play();
         }
 

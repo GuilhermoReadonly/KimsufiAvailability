@@ -136,6 +136,8 @@ public class KimsufiAvailableChecker extends Activity {
             mServiceIntent.setData(Uri.parse("stopThread"));
             this.stopService(mServiceIntent);
 
+            ringtone.stop();
+
             // Puts the status into the Intent
             Intent localIntent = new Intent(Constants.BROADCAST_SERVICE);
             // Broadcasts the Intent to receivers in this app.
@@ -145,10 +147,6 @@ public class KimsufiAvailableChecker extends Activity {
             buttonStartStop.setText(Constants.UI_BUTTON_START);
             logI("Service has been stopped");
 
-
-
-
-            ringtone.stop();
         }
         else{
             logE("Something weird just happened... :(");
