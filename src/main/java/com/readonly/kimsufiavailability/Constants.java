@@ -3,10 +3,13 @@ package com.readonly.kimsufiavailability;
 public final class Constants {
 
     // Defines a custom Intent action
-    public static final String BROADCAST_ACTION = "com.readonly.kimsufiavailability.BROADCAST";
+    public static final String BROADCAST_UI = "com.readonly.kimsufiavailability.BROADCAST.ui";
+    public static final String BROADCAST_SERVICE = "com.readonly.kimsufiavailability.BROADCAST.service";
 
     // Defines the key for the status "extra" in an Intent
     public static final String EXTENDED_DATA_STATUS = "com.readonly.kimsufiavailability.STATUS";
+
+    public static final String STATUS_UNKNOWN = "unknown";
 
 
     // Defines the start text for the start/stop button "extra"

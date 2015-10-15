@@ -6,21 +6,18 @@ import android.content.Intent;
 import android.widget.Toast;
 
 // Broadcast receiver for receiving status updates from the IntentService
-public class ResponseReceiver extends BroadcastReceiver
+public class ServiceReceiver extends BroadcastReceiver
 {
-    KimsufiAvailableChecker kac;
+    RequestService rs;
     // Prevents instantiation
-    public ResponseReceiver(KimsufiAvailableChecker kac) {
-        this.kac = kac;
+    public ServiceReceiver(RequestService rs) {
+        this.rs = rs;
     }
     // Called when the BroadcastReceiver gets an Intent it's registered to receive
 
     public void onReceive(Context context, Intent intent) {
 
-        String response = intent.getStringExtra(Constants.EXTENDED_DATA_STATUS);
+        rs.mustContinue = false;
 
-        kac.logI(response);
-
-        Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
     }
 }

@@ -69,4 +69,16 @@
             android:id="@+id/radioButtonKS1" />
     </RadioGroup>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Localisation : fr"
+        android:id="@+id/textViewLocalisation"
+        android:layout_alignBaseline="@+id/buttonStartStop"
+        android:layout_alignBottom="@+id/buttonStartStop"
+        android:layout_toRightOf="@+id/buttonStartStop"
+        android:layout_toEndOf="@+id/buttonStartStop"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp" />
+
 </RelativeLayout>

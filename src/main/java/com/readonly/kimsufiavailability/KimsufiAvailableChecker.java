@@ -3,6 +3,8 @@ package com.readonly.kimsufiavailability;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -13,10 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class KimsufiAvailableChecker extends Activity {
@@ -32,10 +30,13 @@ public class KimsufiAvailableChecker extends Activity {
     private RadioButton radioButtonKS1 = null;
     private RadioGroup radioGroup = null;
 
-    Intent mServiceIntent = null;
-    IntentFilter mStatusIntentFilter = null;
+    public Ringtone ringtone = null;
 
-    ResponseReceiver mResponseReceiver = null;
+    private Intent mServiceIntent = null;
+    private IntentFilter mStatusIntentFilter = null;
+    private UIReceiver mResponseReceiver = null;
+
+
 
 
     @Override
@@ -54,15 +55,25 @@ public class KimsufiAvailableChecker extends Activity {
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioButtonKS1.setChecked(true);
 
-        mResponseReceiver = new ResponseReceiver(this);
 
-
-
-        // The filter's action is BROADCAST_ACTION
-        mStatusIntentFilter = new IntentFilter(Constants.BROADCAST_ACTION);
-
-
+        mResponseReceiver = new UIReceiver(this);
+        mStatusIntentFilter = new IntentFilter(Constants.BROADCAST_UI);
         LocalBroadcastManager.getInstance(this).registerReceiver(mResponseReceiver, mStatusIntentFilter);
+
+
+        Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if(alert == null){
+            // alert is null, using backup
+            alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            // I can't see this ever being null (as always have a default notification)
+            // but just incase
+            if(alert == null) {
+                // alert backup is null, using 2nd backup
+                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            }
+        }
+        ringtone = RingtoneManager.getRingtone(this, alert);
     }
 
     @Override
@@ -98,15 +109,7 @@ public class KimsufiAvailableChecker extends Activity {
 
 
     private void enableRadioButtons(boolean enable){
-        /*
-        radioButtonKS6.setEnabled(enable);
-        radioButtonKS5.setEnabled(enable);
-        radioButtonKS4.setEnabled(enable);
-        radioButtonKS3.setEnabled(enable);
-        radioButtonKS2.setEnabled(enable);
-        radioButtonKS2SSD.setEnabled(enable);
-        radioButtonKS1.setEnabled(enable);
-        */
+
         for(int i=0;i<radioGroup.getChildCount();i++){
             radioGroup.getChildAt(i).setEnabled(enable);
         }
@@ -125,7 +128,7 @@ public class KimsufiAvailableChecker extends Activity {
 
             enableRadioButtons(false);
             buttonStartStop.setText(Constants.UI_BUTTON_STOP);
-            logI("Starting service...");
+            logI("Service has been started");
         }
         else if(buttonStartStop.getText().equals(Constants.UI_BUTTON_STOP)) {
             logI("Stoping service...");
@@ -133,9 +136,19 @@ public class KimsufiAvailableChecker extends Activity {
             mServiceIntent.setData(Uri.parse("stopThread"));
             this.stopService(mServiceIntent);
 
+            // Puts the status into the Intent
+            Intent localIntent = new Intent(Constants.BROADCAST_SERVICE);
+            // Broadcasts the Intent to receivers in this app.
+            LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+
             enableRadioButtons(true);
             buttonStartStop.setText(Constants.UI_BUTTON_START);
             logI("Service has been stopped");
+
+
+
+
+            ringtone.stop();
         }
         else{
             logE("Something weird just happened... :(");
